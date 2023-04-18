@@ -2,11 +2,16 @@ import praw
 import json
 import os
 
+# Load APIkeys.json file (This is only for me, you can do the same with your keys)
+
+with open('APIkeys.json') as f:
+    keys = json.load(f)
+
 # replace the variables from lines 7-10 with your specific information
 
-client_id = "your_id"
-client_secret = "your secret"
-subreddit = "relationship_advice" # use this or replace with your desired subreddit
+client_id = keys['client_id']
+client_secret = keys['client_secret']
+subreddit = "nba"  # use this or replace with your desired subreddit
 
 reddit = praw.Reddit(
     client_id=client_id,
@@ -20,7 +25,7 @@ submission_ids = []
 
 for submission in reddit.subreddit(subreddit).top(limit=500):
     submission_ids.append(submission.id)
-    
+
 for id in submission_ids:
     submission = reddit.submission(id)
     title = submission.title
